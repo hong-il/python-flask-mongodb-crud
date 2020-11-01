@@ -3,6 +3,13 @@
 # conda create -n crud
 # conda activate crud
 # conda install flask-pymongo
+"""
+    @ Author    : hong-il
+    @ Date      : 2020-11-01
+    @ File name : app.py
+    @ File path : /
+    @ Description : Rendering page
+"""
 from flask import Flask, render_template
 
 app = Flask(__name__)
