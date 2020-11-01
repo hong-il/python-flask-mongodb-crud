@@ -43,7 +43,9 @@ def write():
             "PST_CONTENT": PST_CONTENT
         }
 
-        PST_MST.insert_one(post)
+        insertedPost = PST_MST.insert_one(post)
+        inserted_id = str(insertedPost.inserted_id)
+        print(inserted_id)
 
         return render_template('index.html')
     else:
