@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<!--
+    @ Author    : hong-il
+    @ Date      : 2020-11-01
+    @ File name : createForm.html
+    @ File path :
+    @ Description : 
+-->
+<html lang="en">
+<!-- Post -->
+    <article class="post">
+        <header>
+            <div class="title">
+                <h2>Create</h2>
+            </div>
+            <div class="meta">
+                <time class="published" datetime="2020-1-4">January 4, 2020</time>
+                <a href="#" class="author">
+                    <span class="name">hong-il</span>
+                    <img src="/static/images/avatar.jpg" alt="" />
+                </a>
+            </div>
+        </header>
+
+        <form action="/write" method="POST">
+            <div class="row gtr-uniform">
+                <div class="col-4 col-12-small">
+                    <input type="radio" id="normal" name="PST_CAT_TP" value="0" checked>
+                    <label for="normal">Normal</label>
+                </div>
+                <div class="col-4 col-12-small">
+                    <input type="radio" id="notice" name="PST_CAT_TP" value="1">
+                    <label for="notify">Notice</label>
+                </div>
+                <div class="col-6 col-12-xsmall">
+                    <input type="text" name="PST_TITLE" id="PST_TITLE" value="" placeholder="Title"/>
+                </div>
+                <div class="col-6 col-12-xsmall">
+                    <input type="text" name="PST_SUB_TITLE" id="PST_SUB_TITLE" value="" placeholder="Subtitle"/>
+                </div>
+                <div class="col-12" id="category">
+                    <div class="col-12" id="categorySelect">
+                        <select name="PST_CATEGORY" id="PST_CATEGORY">
+                            <option value="">- Category -</option>
+                            <option value="0">Direct input</option>
+                            <option></option>
+                        </select>
+                    </div>
+                    <div class="col-12" id="categoryText" style="display: none">
+                        <input type="text" name="PST_CAT_TXT" id="PST_CAT_TXT" value="" placeholder="Category"/>
+                    </div>
+                </div>
+                <div class="col-12 col-12-small">
+                    <input type="checkbox" id="demo-human" name="demo-human" checked>
+                    <label for="demo-human">Not a robot</label>
+                </div>
+                <div class="col-12">
+                    <textarea name="PST_CONTENT" id="PST_CONTENT" placeholder="Content" rows="12"></textarea>
+                </div>
+                <div class="col-12">
+                    <ul class="actions" style="margin-bottom: 2em">
+                        <li><input type="submit" value="Upload"/></li>
+                    </ul>
+                </div>
+            </div>
+        </form>
+
+    </article>
+</html>
