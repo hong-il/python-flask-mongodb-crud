@@ -34,7 +34,9 @@ def datetime_format(value):
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    PST_MST = mongo.db.post
+    posts = PST_MST.find({})
+    return render_template('index.html', posts=posts)
 
 
 @app.route('/write', methods=["GET", "POST"])
