@@ -34,8 +34,13 @@ def datetime_format(value):
 
 @app.route('/')
 def index():
+    # Page value (If value is null, default value is 1)
+    page = request.args.get("page", default=1, type=1)
+    # Posts in a page
+    limit = request.args.get("limit", 7, type=1)
     PST_MST = mongo.db.post
-    posts = PST_MST.find({})
+    # Skip prev posts and get limited posts
+    posts = PST_MST.find({}).skip((page - 1) * limit).limit(limit)
     return render_template('index.html', posts=posts)
 
 
