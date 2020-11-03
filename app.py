@@ -10,11 +10,13 @@
     @ File path : /
     @ Description : Rendering, request page
 """
+import math
+import time
+from datetime import datetime
+
+from bson.objectid import ObjectId
 from flask import Flask, render_template, request, abort, redirect, url_for
 from flask_pymongo import PyMongo
-from datetime import datetime
-from bson.objectid import ObjectId
-import time
 
 app = Flask(__name__)
 app.config["MONGO_URI"] = "mongodb://localhost:27017/crud"
@@ -34,14 +36,36 @@ def datetime_format(value):
 
 @app.route('/')
 def index():
-    # Page value (If value is null, default value is 1)
-    page = request.args.get("page", default=1, type=1)
-    # Posts in a page
-    limit = request.args.get("limit", 7, type=1)
     PST_MST = mongo.db.post
-    # Skip prev posts and get limited posts
+    # Page value (If value is null, default value is 1)
+    page = request.args.get("page", default=1, type=int)
+    # Posts in a page
+    limit = request.args.get("limit", 3, type=int)
+    # Get posts data - Skip prev posts and get limited posts
     posts = PST_MST.find({}).skip((page - 1) * limit).limit(limit)
-    return render_template('index.html', posts=posts)
+
+    # Total number of posts
+    tot_count = PST_MST.find({}).count()
+    # Last page number
+    last_page_num = math.ceil(tot_count / limit)
+    # Page block size
+    block_size = 5
+    # Current block
+    block_num = int((page - 1) / block_size)
+    # Start location of block
+    block_start = int((block_size * block_num) + 1)
+    # Last location of block
+    block_last = math.ceil(block_start + (block_size - 1))
+
+    return render_template(
+        'index.html',
+        posts=posts,
+        tot_count=tot_count,
+        last_page_num=last_page_num,
+        block_size=block_size,
+        block_num=block_num,
+        block_start=block_start,
+        block_last=block_last)
 
 
 @app.route('/write', methods=["GET", "POST"])
