@@ -12,11 +12,11 @@
     <article class="post">
         <header>
             <div class="title">
-                <h2><a href="single.html">{{ post.PST_TITLE }}</a></h2>
+                <h2><a href="{{ url_for('post', PST_ID=post._id) }}">{{ post.PST_TITLE }}</a></h2>
                 <p>{{ post.PST_SUB_TITLE }}</p>
             </div>
             <div class="meta">
-                <time class="published">{{ post.PST_CREATED_DATE }}</time>
+                <time class="published">{{ post.PST_CREATED_DATE | datetime_format }}</time>
                 <a href="#" class="author"><span class="name">Jane Doe</span><img src="/static/images/avatar.jpg" alt="" /></a>
             </div>
         </header>
