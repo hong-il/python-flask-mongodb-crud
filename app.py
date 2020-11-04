@@ -79,6 +79,7 @@ def write():
 
         PST_CREATED_DATE = round(datetime.utcnow().timestamp() * 1000)
         PST_MST = mongo.db.post
+        #insert post
         insert_post = {
             "PST_CAT_TP": PST_CAT_TP,
             "PST_TITLE": PST_TITLE,
