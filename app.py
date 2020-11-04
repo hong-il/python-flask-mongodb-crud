@@ -33,7 +33,6 @@ def datetime_format(value):
     value = datetime.fromtimestamp((int(value) / 1000)) + offset
     return value.strftime("%B %d, %Y")
 
-
 @app.route('/')
 def index():
     PST_MST = mongo.db.post
@@ -49,7 +48,7 @@ def index():
     # Last page number
     last_page_num = math.ceil(tot_count / limit)
     # Page block size
-    block_size = 5
+    block_size = 4
     # Current block
     block_num = int((page - 1) / block_size)
     # Start location of block
