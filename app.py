@@ -53,12 +53,13 @@ def index():
     # Current block
     block_num = int((page - 1) / block_size)
     # Start location of block
-    block_start = int((block_size * block_num) + 1)
+    block_start = max(int((block_size * block_num) + 1), 1)
     # Last location of block
-    block_last = math.ceil(block_start + (block_size - 1))
+    block_last = min(math.ceil(block_start + (block_size - 1)), last_page_num)
 
     return render_template(
         'index.html',
+        page=page,
         posts=posts,
         tot_count=tot_count,
         last_page_num=last_page_num,
