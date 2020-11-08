@@ -33,7 +33,8 @@ def datetime_format(value):
     value = datetime.fromtimestamp((int(value) / 1000)) + offset
     return value.strftime("%B %d, %Y")
 
-@app.route('/')
+
+@app.route('/', methods=["GET"])
 def index():
     PST_MST = mongo.db.post
     # Page value (If value is null, default value is 1)
@@ -42,6 +43,10 @@ def index():
     limit = request.args.get("limit", 3, type=int)
     # Get posts data - Skip prev posts and get limited posts
     posts = PST_MST.find({}).skip((page - 1) * limit).limit(limit)
+
+    # Header search
+    search = request.args.get("search", type=str)
+    print(search)
 
     # Total number of posts
     tot_count = PST_MST.find({}).count()
@@ -80,7 +85,7 @@ def write():
 
         PST_CREATED_DATE = round(datetime.utcnow().timestamp() * 1000)
         PST_MST = mongo.db.post
-        #insert post
+        # insert post
         insert_post = {
             "PST_CAT_TP": PST_CAT_TP,
             "PST_TITLE": PST_TITLE,
