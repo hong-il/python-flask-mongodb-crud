@@ -36,20 +36,30 @@ def datetime_format(value):
 
 @app.route('/', methods=["GET"])
 def index():
-    PST_MST = mongo.db.post
     # Page value (If value is null, default value is 1)
     page = request.args.get("page", default=1, type=int)
     # Posts in a page
     limit = request.args.get("limit", 3, type=int)
-    # Get posts data - Skip prev posts and get limited posts
-    posts = PST_MST.find({}).skip((page - 1) * limit).limit(limit)
 
     # Header search
-    search = request.args.get("search", type=str)
-    print(search)
+    search = request.args.get("search", "", type=str)
+    # Select query
+    query = {}
+    # Search requirement
+    search_list = [{"PST_TITLE": {"$regex": "ㅋㅋ"}},
+                   {"PST_SUB_TITLE": {"$regex": search}},
+                   {"PST_CONTENT": {"$regex": search}}]
 
+    # or
+    if len(search_list) > 0:
+        query = {"$or": search_list}
+
+    PST_MST = mongo.db.post
+
+    # Get posts data - Skip prev posts and get limited posts
+    posts = PST_MST.find(query).skip((page - 1) * limit).limit(limit)
     # Total number of posts
-    tot_count = PST_MST.find({}).count()
+    tot_count = PST_MST.find(query).count()
     # Last page number
     last_page_num = math.ceil(tot_count / limit)
     # Page block size
@@ -70,7 +80,8 @@ def index():
         block_size=block_size,
         block_num=block_num,
         block_start=block_start,
-        block_last=block_last)
+        block_last=block_last,
+        search=search)
 
 
 @app.route('/write', methods=["GET", "POST"])
@@ -109,6 +120,8 @@ def post(PST_ID):
     if PST_ID is not None:
         PST_MST = mongo.db.post
         data = PST_MST.find_one({"_id": ObjectId(PST_ID)})
+        page = request.args.get("page")
+        search = request.args.get("search")
 
         if data is not None:
             select_post = {
@@ -121,5 +134,5 @@ def post(PST_ID):
                 "PST_CREATED_DATE": data.get("PST_CREATED_DATE")
             }
 
-            return render_template("post.html", post=select_post)
+            return render_template("post.html", post=select_post, page=page, search=search)
     return abort(404)

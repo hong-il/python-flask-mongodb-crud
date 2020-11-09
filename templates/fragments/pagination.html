@@ -10,7 +10,7 @@
 <ul class="actions pagination">
     {% if page - 1 > 0 %}
         <li>
-            <a class="button large previous" href="{{ url_for('index', page = page - 1) }}">Previous Page</a>
+            <a class="button large previous" href="{{ url_for('index', page = page - 1, search = search) }}">Previous Page</a>
         </li>
     {% endif %}
 
@@ -18,13 +18,13 @@
         {% if i == page %}
             <li><b>{{ i }}</b></li>
         {% else %}
-            <li><a href="{{ url_for('index', page=i) }}">{{ i }}</a></li>
+            <li><a href="{{ url_for('index', page = i, search = search) }}">{{ i }}</a></li>
         {% endif %}
     {% endfor %}
 
     {% if page < last_page_num %}
         <li>
-            <a class="button large next" href="{{ url_for('index', page = page + 1) }}">Next Page</a>
+            <a class="button large next" href="{{ url_for('index', page = page + 1, search = search) }}">Next Page</a>
         </li>
     {% endif %}
 </ul>
