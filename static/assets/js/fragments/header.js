@@ -7,9 +7,6 @@
  **/
 header = {
     search: function (searchText) {
-        // let xhr = new XMLHttpRequest();
-        // xhr.open("GET", "http://127.0.0.1:5000/?search=" + searchText);
-        // xhr.send();
         location.href = "http://127.0.0.1:5000/?search=" + searchText;
     }
 }

@@ -46,7 +46,7 @@ def index():
     # Select query
     query = {}
     # Search requirement
-    search_list = [{"PST_TITLE": {"$regex": "ㅋㅋ"}},
+    search_list = [{"PST_TITLE": {"$regex": search}},
                    {"PST_SUB_TITLE": {"$regex": search}},
                    {"PST_CONTENT": {"$regex": search}}]
 
